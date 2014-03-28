@@ -1,0 +1,44 @@
+- name: Test if git version is sufficient
+  version_check: command="git --version" installif="lessthan" version="1.8"
+  register: ver
+
+- name: git prereqs
+  yum: name={{ item }} state=installed
+  with_items:
+    - perl-ExtUtils-MakeMaker 
+    - gettext-devel
+    - expat-devel
+    - curl-devel
+    - zlib-devel
+    - openssl-devel
+    - openssl-devel
+    - gcc-c++
+    - make
+  sudo: yes
+  when: ver.install_required == true
+  
+- name: get latest git tarball
+  get_url: url=https://api.github.com/repos/git/git/tarball/master dest=/etc/git-source.tar.gz
+  sudo: yes
+  when: ver.install_required == true
+
+
+- name: Untar and rename directory
+  shell: cd /etc && tar zxvf git-source.tar.gz && rm -rf gitsource && mv -f git-git* gitsource
+  sudo: yes
+  when: ver.install_required == true
+  
+- name: Make git
+  shell: cd /etc/gitsource && make prefix=/usr install
+  sudo: yes
+  when: ver.install_required == true
+
+- name: test if git is found on PATH and get version
+  command: git --version
+  register: test_git
+  ignore_errors: yes
+  when: ver.install_required == true
+
+- name: debug test git variable from the test
+  debug: var=test_git
+  when: ver.install_required == true

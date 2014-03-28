@@ -1,0 +1,126 @@
+---
+- name: make kafka group
+  group: name=kafka state=present
+  sudo: yes
+
+- name: make kafka user
+  user: name=kafka state=present group=kafka createhome=no shell=/sbin/nologin
+  sudo: yes
+
+- name: make kafka related directories
+  file: path={{ item }} owner=kafka group=kafka state=directory
+  with_items:
+    - /var/run/kafka
+    - /var/log/kafka
+  sudo: yes
+
+- name: mkdir /etc/kafka
+  file: path={{ item }} state=directory
+  with_items:
+    - /etc/kafka
+  sudo: yes
+
+- name: test if kafka git source exists
+  stat: path=/tmp/kafka-{{ kafka_version }}
+  register: kafka_git_source
+
+- name: Kafka | Download the kafka source from the git repo
+  git: repo={{ kafka_repo_url }} dest=/tmp/kafka-{{ kafka_version }} version={{ kafka_version }}
+  when: kafka_git_source.stat.exists == false
+
+- name: test if kafka source exists
+  stat: path=/usr/local/kafka-{{ kafka_version }}
+  register: kafka_source
+
+- name: Kafka | Copy the kafka source in /usr/local
+  command: rsync --exclude ".git/" --exclude ".git*" -av --no-perms /tmp/kafka-{{ kafka_version }} /usr/local creates=/usr/local/kafka-{{ kafka_version }}
+  when: kafka_source.stat.exists == false
+  sudo: yes
+
+- name: Kafka | Patch the kafka source for scala version compatibility
+  command: sed -i "s/2.8.0/{{ scala_version }}/g" bin/kafka-run-class.sh chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Package the kafka source - pt. 1
+  shell: ./sbt update chdir=/usr/local/kafka-{{ kafka_version }} creates=/usr/local/kafka-{{ kafka_version }}/target
+
+- name: Kafka | Package the kafka source - pt. 2
+  shell: ./sbt "++{{ scala_version }} package" chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Package the kafka source - pt. 3
+  shell: ./sbt "++{{ scala_version }} assembly-package-dependency" chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Update the kafka install permissions
+  file: path=/usr/local/kafka-{{ kafka_version }} owner={{ kafka_user }} group={{ kafka_group }} state=directory recurse=yes
+  sudo: yes
+
+# - name: test if kafka rpm
+#   stat: path=/vagrant/kafka-0.8.0-9.x86_64.rpm
+#   register: kafkarpmstat
+
+# # TODO: Get rid of copying rpm once it lives on ae repo.
+# - name: download kafka rpm
+#   get_url: url=http://poole.im/files/{{ item }} dest=/vagrant/{{ item }}
+#   with_items:
+#     - kafka-0.8.0-9.x86_64.rpm
+#   when: kafkarpmstat.stat.exists == false
+
+# # TODO: install from ae repo once it's available.
+# - name: yum Install kafka
+#   yum: name='/vagrant/kafka-0.8.0-9.x86_64.rpm' state=installed
+#   sudo: yes
+
+- name: Symlink /usr/lib/kafka
+  file: src={{ kafka_home }} dest=/usr/lib/kafka state=link
+  sudo: yes
+
+- name: Symlink /etc/kafka/conf
+  file: src={{ kafka_home }}/config dest=/etc/kafka/conf state=link
+  sudo: yes
+
+- name: install kafka-env.sh
+  template: src={{ item }}.j2 dest={{ kafka_home }}/bin/{{ item }}
+  register: kafka_env_status
+  sudo: yes
+  with_items:
+    - kafka-env.sh
+
+- name: copy kafka startup script
+  copy: src={{ item }} dest={{ kafka_home }}/bin/{{ item }} mode=755
+  register: kafka_startup_script_status
+  sudo: yes
+  with_items:
+    - kafka.sh
+
+- name: make sure the kafka startup script is removed before creating the symlink
+  file: dest=/etc/init.d/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - kafka
+
+- name: install kafka startup script
+  file: src={{ kafka_home }}/bin/{{ item }}.sh dest=/etc/init.d/{{ item }} state='link'
+  sudo: yes
+  with_items:
+    - kafka
+
+- name: Setup Kafka config
+  template: src={{ item }}.j2 dest={{ kafka_conf_dir }}/{{ item }}
+  register: kafka_config_status
+  sudo: yes
+  with_items:
+    - server.properties
+
+- name: yum Install kafka
+  yum: name=initscripts.x86_64 state=installed
+  sudo: yes
+
+- name: Start Kafka
+  service: name=kafka state=started
+  register: started_kafka
+  sudo: yes
+
+- name: re-run kafka when necessary
+  service: name=kafka state=restarted
+  when:
+    (kafka_env_status|changed or kafka_startup_script_status|changed or kafka_config_status|changed) and not started_kafka|changed
+  sudo: yes

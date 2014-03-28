@@ -1,0 +1,3 @@
+- name: Install nosetests
+  pip: name=nose version=1.3.0
+  sudo: yes

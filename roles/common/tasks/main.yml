@@ -1,0 +1,10 @@
+- include: ../../../programs/wget.yml
+- include: ../../../programs/pip.yml
+- include: ../../../programs/epel.yml
+- include: ../../../programs/lsof.yml
+- include: ../../../programs/nano.yml
+- include: ../../../programs/oracle_java.yml
+- include: ../../../programs/python_argparse.yml
+- include: ../../../programs/git.yml
+- include: ../../../programs/tmux.yml
+- include: ../../../programs/nosetests.yml

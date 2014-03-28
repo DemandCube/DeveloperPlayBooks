@@ -1,0 +1,3 @@
+# Variables for only this role
+play_download_url: http://downloads.typesafe.com/play/2.2.1/play-2.2.1.zip
+play_version: 2.2.1

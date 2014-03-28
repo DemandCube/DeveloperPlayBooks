@@ -1,0 +1,42 @@
+- name: checkout Sparkngin git repo
+  git: repo=https://github.com/DemandCube/Sparkngin.git
+        dest=/home/vagrant/Sparkngin
+- name: checkout librdkafka from git repo
+  git: repo=https://github.com/edenhill/librdkafka.git
+        dest=/home/vagrant/librdkafka
+# More Info: http://zeromq.org/distro:centos
+# From: http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/home:fengshuo:zeromq.repo
+- name: add zeromq repo to yum
+  copy: src=zeromq.repo
+        dest=/etc/yum.repos.d/
+        owner=root group=root mode=0644 force=yes
+  sudo: yes
+
+- name: install zeromq-devel dependency
+  yum: name=zeromq-devel
+  sudo: yes
+  
+- name: install zlib-devel
+  yum: name=zlib-devel
+  sudo: yes
+  
+- name: install strace
+  yum: name=strace
+  sudo: yes
+
+- name: build and install librdkafka
+  command: "{{ item }} chdir=/home/vagrant/librdkafka"
+  with_items:
+    - ./configure
+    - make
+    - sudo make install
+    
+- name: build and install Sparkngin adapter zmq2kafka-streamer
+  command: "{{ item }} chdir=/home/vagrant/Sparkngin/adapters/zmq2kafka-streamer"
+  with_items:
+    - make
+    - sudo make install
+# make all
+# sudo make install
+# cd /vagrant/adapters/zmq2kafka-streamer
+# make  

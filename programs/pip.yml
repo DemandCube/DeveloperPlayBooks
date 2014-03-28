@@ -1,0 +1,16 @@
+- name: test if pip is found on PATH
+  command: which pip
+  register: test_pip
+  ignore_errors: yes
+
+- name: download get-pip.py
+  get_url: url='https://raw.github.com/pypa/pip/master/contrib/get-pip.py' dest=/root/
+  when: test_pip.rc != 0
+  
+- name: install pip
+  command: python get-pip.py chdir=/root/
+  when: test_pip.rc != 0
+
+- name: cleanup get-pip.py
+  file: state=absent path=/root/get-pip.py
+  when: test_pip.rc != 0

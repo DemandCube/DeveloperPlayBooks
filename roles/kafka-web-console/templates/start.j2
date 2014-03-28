@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+appdir=`dirname $0`
+# set class path
+classpath="$appdir/lib/*:io.netty.netty-3.7.0.Final.jar:ch.qos.logback.logback-classic-1.0.13.jar"
+# now run server in background to run this application
+java $* -cp $classpath -Xmx384m -Xss512k -server -XX:+UseCompressedOops -XX:+PerfDisableSharedMem -Dhttp.port={{ kafka_web_console_port }} -Dfile.encoding=UTF8 -Dlogger.application=INFO play.core.server.NettyServer `dirname $0` &
+

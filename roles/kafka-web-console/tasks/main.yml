@@ -1,0 +1,93 @@
+# kakfak web console installation from github
+
+---
+- name: test if kafka web console git source exists
+  stat: path=/tmp/kafka_web_console-{{ kafka_web_console_version }}
+  register: kafka_web_console_git_source
+
+- name: Download the kafka web console source from the git repo
+  git: repo={{ kafka_web_console_repo_url }} dest=/tmp/kafka_web_console-{{ kafka_web_console_version }} version={{ kafka_web_console_version }}
+  when: kafka_web_console_git_source.stat.exists == false
+
+- name: Copy the kafka web console source in /usr/local
+  command: rsync --exclude ".git/" --exclude ".git*" -av --no-perms /tmp/kafka_web_console-{{ kafka_web_console_version }} /usr/local creates=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+  sudo: yes
+
+- name : Stop the firewall
+  command: /etc/init.d/iptables stop
+  sudo: yes
+
+- name : Stop the firewall forever
+  command: chkconfig iptables off 
+  sudo: yes
+
+- name: make sure the kafka_web_console  conf is removed before copying
+  file: dest=/usr/local/kafka_web_console-{{ kafka_web_console_version }}/conf/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - application.conf
+
+- name: copy kafka_web_console application.conf
+  template: src={{ item }}.j2 dest=/usr/local/kafka_web_console-{{kafka_web_console_version}}/conf/{{ item }} mode=755
+  sudo: yes
+  with_items:
+    - application.conf
+
+- name: make sure the kafka_web_console  build.sbt is removed before copying
+  file: dest=/usr/local/kafka_web_console-{{ kafka_web_console_version }}/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - build.sbt
+
+- name: copy kafka_web_console build.conf
+  template: src={{ item }}.j2 dest=/usr/local/kafka_web_console-{{kafka_web_console_version}}/{{ item }} mode=755
+  sudo: yes
+  with_items:
+    - build.sbt
+
+# Create distribution async, polling every 10s (Default) for a max of 15m (60s * 15m = 900s)
+- name: Create Dist deployment
+  shell: cd {{ kafka_web_console_home }} && play dist
+  async: 900
+
+- name: mkdir /usr/lib/kafka_web_console
+  file: dest={{ item }} state=directory
+  with_items:
+    - /usr/lib/kafka_web_console
+  sudo: yes
+
+- name: Remove old zip and unziped file
+  file: dest={{ item }} state='absent'
+  with_items:
+   - /usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}.zip
+   - /usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}
+  sudo: yes
+
+- name: Copy zip to home folder
+  command: cp {{ kafka_web_console_home }}/target/universal/kafka-web-console-{{ kafka_web_console_version }}.zip /usr/lib/kafka_web_console/
+  sudo: yes
+
+- name: Unpack project
+  command: unzip kafka-web-console-{{ kafka_web_console_version }}.zip chdir=/usr/lib/kafka_web_console
+  sudo: yes
+
+- name: Copy start script from source
+  template: src={{ item }}.j2  dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}/{{ item }} mode=755
+  with_items:
+   - start
+  sudo: yes
+
+- name: Chmod start script in project
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}/start mode=755
+  sudo: yes
+
+- name: Remove old zip file (let's clean the house a bit)
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}.zip state=absent
+  sudo: yes
+
+# Launch project (asynchronously with fire-and-forget behaviour)
+- name: Launch project
+  shell: nohup ./start chdir=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}
+  async: 86400
+  poll: 0
+  sudo: yes

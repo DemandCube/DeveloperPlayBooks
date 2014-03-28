@@ -1,0 +1,43 @@
+#install and start kafka offset monitor
+---
+- name: test if kafka offset monitor exists
+  stat: path={{ kafka_offset_monitor_home }}/kafka-offset-monitor.jar
+  register: kafkaoffset
+  sudo: yes
+
+- name: create kafka offset monitor dir
+  file: state=directory path={{ kafka_offset_monitor_home }}/ group=vagrant owner=vagrant mode=755
+  when: kafkaoffset.stat.exists == false
+  sudo: yes
+
+- name: download kafka offset monitor jar
+  get_url: url={{ kafka_offset_monitor_download_url }} dest=/tmp/kafka-offset-monitor.jar mode=0440
+  when: kafkaoffset.stat.exists == false
+  sudo: yes
+
+- name: make sure the kafkaoffset  start file is removed before copying new file
+  file: dest={{ kafka_offset_monitor_home }}/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - start
+
+- name: Copy the kafka-offset-monitor jar
+  command: cp /tmp/kafka-offset-monitor.jar {{ kafka_offset_monitor_home }}/
+  sudo: yes
+
+- name: Copy start script to kafka_offset_monitor_home
+  template: src={{ item }}.j2  dest={{ kafka_offset_monitor_home }}/{{ item }} mode=755
+  with_items:
+   - start
+  sudo: yes
+
+- name: Chmod start script in kafka_offset_monitor_home
+  file: dest={{ kafka_offset_monitor_home }}/start mode=755
+  sudo: yes
+
+# Launch kafka offset monitor (asynchronously with fire-and-forget behaviour)
+- name: Launch kafka-offset-monitor
+  shell: nohup ./start chdir={{ kafka_offset_monitor_home}}
+  async: 86400
+  poll: 0
+  sudo: yes

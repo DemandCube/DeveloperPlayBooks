@@ -1,0 +1,4 @@
+- name: install sshpass
+  yum: name='sshpass' state=installed
+  sudo: yes
+  

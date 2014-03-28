@@ -1,0 +1,3 @@
+- name: install argparse for python
+  pip: name='argparse' state=present
+  sudo: yes
