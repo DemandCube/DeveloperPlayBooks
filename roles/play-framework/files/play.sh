@@ -1,0 +1,1 @@
+export PATH=/usr/local/play-framework/play-2.2.1:$PATH

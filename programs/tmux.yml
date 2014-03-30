@@ -1,0 +1,112 @@
+# - name: test if tmux is installed at /usr/local/bin/tmux
+#   stat: path=/usr/local/bin/tmux
+#   register: tmux
+# # when: tmux.stat.exists != true
+- name: Test if tmux is installed
+  version_check: command="tmux -V"
+  register: test_tmux
+  
+- name: debug test tmux variable from the test
+  debug: var=test_tmux
+  
+- name: install dependencies to build tmux
+  yum: name={{ item }}
+  with_items:
+    - gcc 
+    - kernel-devel
+    - make 
+    - ncurses-devel
+    - automake
+    - libtool
+  when: test_tmux.install_required == true
+  sudo: yes
+
+
+- name: download libevent-release-2.0.21-stable.tar.gz
+  get_url: url='https://github.com/libevent/libevent/archive/release-2.0.21-stable.tar.gz' dest=/root/libevent-release-2.0.21-stable.tar.gz
+  when: test_tmux.install_required == true
+  sudo: yes
+
+- name: download http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.8/tmux-1.8.tar.gz
+  get_url: url='http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.8/tmux-1.8.tar.gz' dest=/root/tmux-1.8.tar.gz
+  when: test_tmux.install_required == true
+  sudo: yes
+
+- name: untar libevent
+  shell: "tar xvf {{ item }} chdir=/root"
+  with_items:
+    - libevent-release-2.0.21-stable.tar.gz
+    - tmux-1.8.tar.gz
+  when: test_tmux.install_required == true
+  sudo: yes
+
+- name: build libevent
+  shell: "{{ item }} chdir=/root/libevent-release-2.0.21-stable"
+  with_items:
+    - ./autogen.sh
+    - ./configure 
+    - make
+    - make install
+  when: test_tmux.install_required == true
+  sudo: yes
+    
+- name: build tmux
+  shell: "{{ item }} chdir=/root/tmux-1.8"
+  with_items:
+    - 'LDFLAGS="-L/usr/local/lib -Wl,-rpath=/usr/local/lib" ./configure --prefix=/usr/local'
+    - make
+    - make install
+  when: test_tmux.install_required == true
+  sudo: yes
+
+- name: cleanup libevent and tmux files and dirs
+  command: "rm -rf  {{ item }} chdir=/root"
+  with_items:
+    - libevent-release-2.0.21-stable.tar.gz
+    - tmux-1.8.tar.gz
+    - libevent-release-2.0.21-stable
+    - tmux-1.8
+  when: test_tmux.install_required == true
+  sudo: yes
+
+# /usr/local/bin/tmux
+
+# Release as of 2/15/2014  
+# https://github.com/libevent/libevent/archive/release-2.0.21-stable.tar.gz
+# http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.8/tmux-1.8.tar.gz
+
+# download latest libevent2 and tmux sources, and extract them somewhere
+# (thx bluejedi for tip on latest tmux URL)
+#
+# at the time of writing:
+# https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+# http://sourceforge.net/projects/tmux/files/latest/download?source=files
+# http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.8/tmux-1.8.tar.gz
+# 
+ 
+# # install deps
+# sudo yum install gcc kernel-devel make ncurses-devel
+# 
+# curl -L -o libevent-release-2.0.21-stable.tar.gz https://github.com/libevent/libevent/archive/release-2.0.21-stable.tar.gz
+# curl -L -o tmux-1.8.tar.gz http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.8/tmux-1.8.tar.gz
+# 
+# tar xvf libevent-release-2.0.21-stable.tar.gz
+# tar xvf tmux-1.8.tar.gz
+#  
+# # cd to libevent2 src
+# cd libevent-release-2.0.21-stable
+# #./configure --prefix=/usr/local
+# ./autogen.sh
+# ./configure 
+# make
+# sudo make install
+# cd ..
+# 
+# # cd to tmux src
+# cd tmux-1.8
+# LDFLAGS="-L/usr/local/lib -Wl,-rpath=/usr/local/lib" ./configure --prefix=/usr/local
+# make
+# sudo make install
+ 
+# you're good to go, for a sample ~/.tmux.conf check out
+# https://github.com/sturadnidge/misc/blob/master/.tmux.conf

@@ -1,0 +1,18 @@
+# Download the rpm file directly into /vagrant (vagrant's shared folder), so
+# next time we don't need to download it again.
+# by pass Oracle's annoying licensing agreement
+- name: Download JDK
+  shell: "wget --quiet --no-cookies --no-check-certificate -O {{ jdk_rpm }} --header 'Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie' {{ jdk_download_url }} --no-check-certificate creates={{ jdk_rpm }}"
+          
+
+- name: Install JDK
+  shell: "yum -y --nogpgcheck localinstall {{ jdk_rpm }} creates=/usr/java"
+  sudo: yes
+
+- name: symlink java
+  file: src=/usr/java/default/bin/java dest=/usr/bin/java state=link
+  sudo: yes
+
+- name: symlink javac
+  file: src=/usr/java/default/bin/javac dest=/usr/bin/javac state=link
+  sudo: yes

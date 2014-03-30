@@ -1,0 +1,25 @@
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+//////     Application Build Information 
+//////  copy this file to $PROJECT_HOME/build.sbt
+//////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+name := "kafka-web-console"
+
+version := "v1.0"
+
+libraryDependencies ++= Seq(
+  jdbc,
+  cache,
+  "mysql" % "mysql-connector-java" % "5.1.27",
+  "org.squeryl" % "squeryl_2.10" % "0.9.5-6",
+  "com.twitter" % "util-zk_2.10" % "6.11.0",
+  "org.apache.kafka" % "kafka_2.10" % "0.8.0"
+    exclude("javax.jms", "jms")
+    exclude("com.sun.jdmk", "jmxtools")
+    exclude("com.sun.jmx", "jmxri")
+)
+
+play.Project.playScalaSettings

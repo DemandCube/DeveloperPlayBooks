@@ -1,0 +1,13 @@
+tickTime=2000
+dataDir={{ zookeeper_data_dir }}
+clientPort={{ zookeeper_clientport }}
+initLimit=5
+syncLimit=2
+{% if groups['Zookeepers'] is defined %}
+{% for host in groups['Zookeepers'] %}
+server.{% if groups['Zookeepers'] is defined %}{{ groups['Zookeepers'].index(host)}}{% else %}0{% endif %}={{ host }}:{{ zookeeper_leader_port }}:{{ zookeeper_election_port }}
+{% endfor %}
+{% else %}
+server.0={{ inventory_hostname }}:{{ zookeeper_leader_port }}:{{ zookeeper_election_port }}
+{% endif %}
+

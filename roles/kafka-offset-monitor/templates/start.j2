@@ -1,0 +1,6 @@
+java -cp kafka-offset-monitor.jar \
+     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
+     --zk {{ kafka_offset_zk_servers }} \
+     --port {{ kafka_offset_monitor_port }} \
+     --refresh 10.seconds \
+     --retain 2.days &

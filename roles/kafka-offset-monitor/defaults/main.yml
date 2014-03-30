@@ -1,0 +1,5 @@
+# Variables for only this role
+kafka_offset_monitor_download_url: http://quantifind.github.io/KafkaOffsetMonitor/dist/KafkaOffsetMonitor-assembly-0.1.0-SNAPSHOT.jar
+kafka_offset_monitor_home: /usr/local/kafkaoffset
+kafka_offset_monitor_port: 8181
+kafka_offset_zk_servers: localhost:2181

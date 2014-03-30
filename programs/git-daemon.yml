@@ -1,0 +1,3 @@
+- name: install git-daemon for Jenkins credentials storage
+  yum: name='git-daemon' state=installed
+  sudo: yes

@@ -1,0 +1,32 @@
+#install play framework
+---
+- name: test if play-framework exists
+  stat: path=/url/local/play-framework/play-{{ play_version }}
+  register: play
+
+- name: create play-framework dir
+  file: state=directory path=/usr/local/play-framework/ group=vagrant owner=vagrant mode=755
+  when: play.stat.exists == false
+  sudo: yes
+
+- name: download play-framework play_version
+  get_url: url=http://downloads.typesafe.com/play/{{ play_version }}/play-{{ play_version }}.zip dest=/usr/local/play-framework/play-{{ play_version }}.zip mode=0440
+  when: play.stat.exists == false
+  sudo: yes
+
+- name: unzip play-framework
+  shell: unzip /usr/local/play-framework/play-{{ play_version }}.zip -d /usr/local/play-framework/
+  when: play.stat.exists == false
+  sudo: yes
+
+- name: Update the play-framework install permissions
+  file: path=/usr/local/play-framework/play-{{ play_version }} state=directory mode=755 group=vagrant owner=vagrant recurse=yes
+  sudo: yes
+
+- name: copy play env variable file to /etc/profile.d/play.sh
+  copy: src=play.sh dest=/etc/profile.d/play.sh owner=root group=root mode=755
+  sudo: yes
+
+- name: set up play symlink
+  file: state=link src=/usr/local/play-framework/play-{{ play_version }}/play dest=/usr/bin/play  mode=755
+  sudo: yes

@@ -1,0 +1,7 @@
+# Variables for only this role
+zookeeper_log_dir: /var/log/zookeeper
+zookeeper_pid_dir: /var/run/zookeeper
+zookeeper_data_dir: /grid/hadoop/zookeeper/data
+zookeeper_clientport: 2181 
+zookeeper_leader_port: 2888
+zookeeper_election_port: 3888

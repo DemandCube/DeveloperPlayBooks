@@ -1,0 +1,6 @@
+- name: download epel rpm
+  shell: "wget --no-check-certificate http://download.fedoraproject.org/pub/epel/6/x86_64/{{ epel_filename }} -O {{ epel_rpm }} creates={{ epel_rpm }}"
+
+- name: yum install epel (Extra Packages for Enterprise Linux)
+  shell: "yum -y --nogpgcheck localinstall {{ epel_rpm }}"
+  sudo: yes

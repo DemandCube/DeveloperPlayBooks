@@ -1,0 +1,4 @@
+- name: nano
+  yum: name='nano' state=installed
+  sudo: yes
+  

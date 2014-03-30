@@ -1,0 +1,10 @@
+export JAVA_HOME={{ java_home }}
+export JMX_PORT={{ kafka_jmx_port }}
+#export KAFKA_GC_LOG_OPTS
+export KAFKA_HEAP_OPTS="{{ kafka_heap_opts }}"
+export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false  -Djava.net.preferIPv4Stack=true -Djava.rmi.server.hostname={{ inventory_hostname }}"
+#export KAFKA_JVM_PERFORMANCE_OPTS
+export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:{{ kafka_conf_dir }}/log4j.properties"
+#export KAFKA_OPTS
+export LOG_DIR={{ log_dir }}
+#export SCALA_VERSION

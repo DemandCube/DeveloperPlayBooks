@@ -1,0 +1,63 @@
+---
+- name: make zookeeper group
+  group: name=hadoop state=present
+  sudo: yes
+
+- name: make zookeeper user
+  user: name={{ item }} comment="Zookeper User" state=present group=hadoop
+  with_items:
+    - zookeeper
+  sudo: yes
+
+- name: create zookeeper log directory
+  file: path={{ zookeeper_log_dir }} state=directory mode=755 group=hadoop owner=zookeeper
+  sudo: yes
+
+- name: create zookeeper pid directory
+  file: path={{ zookeeper_pid_dir }} state=directory mode=755 group=hadoop owner=zookeeper
+  sudo: yes
+
+- name: create zookeeper data directory
+  file: path={{ zookeeper_data_dir }} state=directory mode=755 group=hadoop owner=zookeeper
+  sudo: yes
+
+- name: create zookeeper id file
+  template: src={{ item }}.j2 dest={{ zookeeper_data_dir }}/{{ item }} mode=755 group=hadoop owner=zookeeper
+  # sudo_user: zookeeper
+  with_items:
+    - myid
+  sudo: yes
+
+# Note the logic
+# groups['Zookeepers'] # only work on the second 'vagrant provision'  it fails for the initial boot not sure why
+# {% if groups['Zookeepers'] is defined %}{{ groups['Zookeepers'].index(inventory_hostname)}}{% else %}0{% endif %}
+
+
+- name: yum install zookeeper-server
+  yum: name=zookeeper-server state=installed
+  sudo: yes
+
+# /etc/init.d/zookeeper-server comes with the zookeeper-server rpm package,
+# but the script makes reference to the zookeeper group.
+- name: Copy our version of the zookeeper init script with the correct group name.
+  copy: src={{ item }} dest=/etc/init.d/{{ item }} owner=root group=root mode=755
+  sudo: yes
+  with_items:
+    - zookeeper-server
+
+- name: Copy the configuration file for zookeeper
+  template: src={{ item }}.j2 dest=/etc/zookeeper/conf/{{ item }}
+  notify: restart zookeeper
+  sudo: yes
+  with_items:
+    - zoo.cfg
+    - zookeeper-env.sh
+
+- name: start zookeeper if not running
+  service: name=zookeeper-server state=started enabled=yes
+  sudo: yes
+
+#- name: initialize the zookeeper
+  #shell: creates=/var/lib/zookeeper/myid service zookeeper-server init --myid={{zoo_id}}
+  #sudo: yes
+

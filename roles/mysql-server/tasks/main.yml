@@ -1,0 +1,38 @@
+#
+# mysql server installation and configuration
+#
+---
+  # install mysql server and restart; it doesn't start automatically after installation
+  - name: install mysql-server
+    action: yum name=mysql-server
+    notify:
+     - restart mysql     
+    sudo: yes
+
+  # create mysql conf directory
+  - name: make mysql related directories
+    file: path={{ item }} state=directory
+    with_items:
+     - /etc/mysql/conf.d
+    sudo: yes
+
+  # copy the mysql related conf files
+  - name: write conf.d/mysqld.cnf
+    template: src=mysqld.cnf.j2 dest=/etc/mysql/conf.d/mysqld.cnf
+    notify: restart mysql
+    sudo: yes
+
+  - name: write conf.d/client.cnf
+    template: src=client.cnf.j2 dest=/etc/mysql/conf.d/client.cnf
+    notify: restart mysql
+    sudo: yes
+
+  # mysql secure installation; sets mysql root password and other options specifed in mysql_secure_installatin  file
+  - name: mysql_secure_installation
+    template: src=mysql_secure_installation.j2 dest=/tmp/mysql_secure_installation owner=root group=root mode=0600
+    when: mysql_root_password is defined
+    notify:
+     - launch mysql_secure_installation
+     - delete mysql_secure_installation
+     - restart mysql
+    sudo: yes

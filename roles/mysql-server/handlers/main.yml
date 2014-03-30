@@ -1,0 +1,17 @@
+---
+  # set up mysql security; set root password; delete test database; and more
+  - name: launch mysql_secure_installation
+    when: mysql_root_password is defined
+    shell: cat /tmp/mysql_secure_installation | mysql_secure_installation
+    sudo: yes
+
+  # delete mysql_secure_installation file from tmp directory
+  - name: delete mysql_secure_installation
+    when: mysql_root_password is defined
+    action: file dest=/tmp/mysql_secure_installation state=absent
+    sudo: yes
+
+  # finally restart mysql server to reflect changes
+  - name: restart mysql
+    service: name=mysqld state=restarted enabled=yes
+    sudo: yes

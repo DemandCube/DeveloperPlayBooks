@@ -1,0 +1,9 @@
+jdk_version: '7u45'
+jdk_build: 'b18'
+jdk_filename: "jdk-{{ jdk_version }}-linux-x64.rpm"
+jdk_download_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jdk_version }}-{{ jdk_build }}/{{ jdk_filename }}"
+jdk_rpm: "{{ jdk_filename }}"
+
+epel_filename: "epel-release-6-8.noarch.rpm"
+epel_rpm: "{{ epel_filename }}"
+maven_repo_location: "/etc/yum.repos.d/epel-apache-maven.repo"
