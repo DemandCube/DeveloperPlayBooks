@@ -1,0 +1,34 @@
+#jmxtrans installation
+#change to use fetch to get the rpm
+#for setting up jmxtrans
+---
+ - name: install python setup tools
+   yum: name=python-setuptools state=installed
+   
+ - name: get epel repo
+   get_url: url={{ epel_repo }} dest=/tmp/ force=yes
+   register: epel_rpm
+   
+ - name: add epel repo
+   yum: name="/tmp/epel-release-6-8.noarch.rpm"
+   
+ - name: install python pip
+   yum: name=python-pip state=installed
+   
+ - name: install httplib2 needed for the uri action
+   pip: name=httplib2
+ 
+ - name: test if jmxtrans download location is valid
+   stat: path={{ jmxtrans_download_url }}
+   register: test_me_out
+   
+ - name: create download location
+   stat: path=/tmp/jmxtrans/
+
+ - name: download the jmxtrans rpm file
+   action: get_url url=jmx_download_url dest=download_location/ force=yes
+ 
+ - name: install the jmxtrans rpm
+   action: rpm -ivh {{ jmxtrans.rpm }}
+ 
+ 
