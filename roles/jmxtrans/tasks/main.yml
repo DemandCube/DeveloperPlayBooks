@@ -1,0 +1,56 @@
+#jmxtrans installation
+#change to use fetch to get the rpm
+
+---
+ - name: check if jmxtrans download url is valid
+   stat: path={{ jmxtrans_download_url }}
+   register: test_me_out
+   
+ - name: create the necessary directories
+   file: path={{ item }} state=directory
+   with_items:
+    - /home/vagrant/jmxtrans/logs
+    - /home/vagrant/jmxtrans/json
+    - "{{ download_location }}"
+   
+ - name: download the jmxtrans rpm file
+   action: get_url url={{ jmxtrans_download_url }} dest="{{ download_location }}/jmxtrans.rpm"
+   #register: downloaded file location
+   #what to do when it fails on bad internet
+ 
+ - name: install the jmxtrans rpm
+   yum: name="{{ download_location }}/jmxtrans.rpm" state=present
+   sudo: yes
+   #reference the downlaod file location
+    
+ - name: Edit kafka-server-start.sh add JMX_PORT
+   lineinfile: dest=~/kafka/bin/kafka-server-start.sh regexp=^export line="export JMX_PORT=${JMX_PORT:-9999}"
+   
+# - name: own jmxtrans.sh
+#   action: command "sudo chown -R vagrant /usr/share/jmxtrans/"
+
+ - name: Edit jmxtrans.sh. Modify JSON_DIR
+   lineinfile: dest=/usr/share/jmxtrans/jmxtrans.sh regexp=^JSON_DIR line="JSON_DIR=${JSON_DIR:-"/home/vagrant/jmxtrans/json"}"
+   
+ - name: Edit jmxtrans.sh. Modify LOG_DIR
+   lineinfile: dest=/usr/share/jmxtrans/jmxtrans.sh regexp=^LOG_DIR line="LOG_DIR=${LOG_DIR:-"/home/vagrant/jmxtrans/logs"}"
+   
+ - name: Add jmxtrans.sh to path
+   lineinfile: dest=~/.bash_profile regexp=^PATH line=PATH=$PATH:/usr/share/jmxtrans
+   
+ - name: Get the basic jmxtrans config files
+   template: src={{item}} dest=~/jmxtrans/json/{{item}} mode=664
+   with_items:
+    - kafka.json
+    - kafka2.json
+    - kafkaallmetrics.json
+   
+ - name:  Create log file
+   command: "touch /home/vagrant/jmxtrans/logs/jmxtrans.log"
+   
+ - name: Start jmxtrans
+   shell: chdir=/usr/share/jmxtrans/ nohup /usr/share/jmxtrans/jmxtrans.sh start /home/vagrant/jmxtrans/json/kafkaallmetrics.json
+   register: vagrant
+ - debug: var=vagrant.stdout_lines
+   #async: 86400
+   #poll: 0
