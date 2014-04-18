@@ -1,0 +1,11 @@
+---
+- name: create zookeeper data directory
+  file: path={{ zookeeper_data_dir }} state=directory mode=755 group=vagrant owner=vagrant
+  sudo: yes
+
+- name: create zookeeper id file
+  template: src={{ item }}.j2 dest={{ zookeeper_data_dir }}/{{ item }} mode=755 group=vagrant owner=vagrant
+  # sudo_user: zookeeper
+  with_items:
+    - myid
+  sudo: yes

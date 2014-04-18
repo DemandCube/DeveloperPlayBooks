@@ -1,10 +1,21 @@
 ---
-- hosts: sparkngin
+- hosts: common
+  remote_user: root
   roles:
     - common
+
+- hosts: sparkngin1
+  roles:
+    - zookeeper_test
+    - sparkngin
+
+- hosts: sparkngin2
+  roles:
+    - hdp
+    - zookeeper_test
     - zookeeper
     - kafka
-    - mysql-server
     - play-framework
+    - mysql-server
     - kafka-web-console
     - kafka-offset-monitor

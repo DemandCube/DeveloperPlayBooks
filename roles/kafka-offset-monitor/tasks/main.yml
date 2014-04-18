@@ -38,6 +38,6 @@
 # Launch kafka offset monitor (asynchronously with fire-and-forget behaviour)
 - name: Launch kafka-offset-monitor
   shell: nohup ./start chdir={{ kafka_offset_monitor_home}}
-  async: 86400
+  async: 8600000
   poll: 0
   sudo: yes
