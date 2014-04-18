@@ -15,7 +15,7 @@
   sudo: yes
 
 - name: unzip play-framework
-  shell: unzip /usr/local/play-framework/play-{{ play_version }}.zip -d /usr/local/play-framework/
+  shell: unzip -Z /usr/local/play-framework/play-{{ play_version }}.zip -d /usr/local/play-framework/
   when: play.stat.exists == false
   sudo: yes
 
@@ -24,9 +24,9 @@
   sudo: yes
 
 - name: copy play env variable file to /etc/profile.d/play.sh
-  copy: src=play.sh dest=/etc/profile.d/play.sh owner=root group=root mode=755
+  copy: src=play.sh dest=/etc/profile.d/play.sh owner=root group=root mode=777
   sudo: yes
 
 - name: set up play symlink
-  file: state=link src=/usr/local/play-framework/play-{{ play_version }}/play dest=/usr/bin/play  mode=755
+  file: state=link src=/usr/local/play-framework/play-{{ play_version }}/play dest=/usr/bin/play
   sudo: yes

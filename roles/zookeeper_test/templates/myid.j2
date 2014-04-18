@@ -1,0 +1,3 @@
+{% if groups['Zookeepers'] is defined %}{{ groups['Zookeepers'].index(inventory_hostname)}}{% else %}0{% endif %}
+
+
