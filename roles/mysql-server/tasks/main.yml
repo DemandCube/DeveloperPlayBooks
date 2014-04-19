@@ -6,7 +6,7 @@
   - name: install mysql-server
     action: yum name=mysql-server
     notify:
-     - restart mysql     
+     - restart mysql
     sudo: yes
 
   # create mysql conf directory
@@ -27,12 +27,17 @@
     notify: restart mysql
     sudo: yes
 
-  # mysql secure installation; sets mysql root password and other options specifed in mysql_secure_installatin  file
-  - name: mysql_secure_installation
-    template: src=mysql_secure_installation.j2 dest=/tmp/mysql_secure_installation owner=root group=root mode=0600
-    when: mysql_root_password is defined
-    notify:
-     - launch mysql_secure_installation
-     - delete mysql_secure_installation
-     - restart mysql
+  - name: run mysqld at boot time
+    command: /sbin/chkconfig mysqld on
     sudo: yes
+
+  # WHY is this here?
+  # mysql secure installation; sets mysql root password and other options specifed in mysql_secure_installatin  file
+  #- name: mysql_secure_installation
+    #template: src=mysql_secure_installation.j2 dest=/tmp/mysql_secure_installation owner=root group=root mode=0600
+    #when: mysql_root_password is defined
+    #notify:
+     #- launch mysql_secure_installation
+     #- delete mysql_secure_installation
+     #- restart mysql
+    #sudo: yes
