@@ -1,7 +1,7 @@
 #install play framework
 ---
 - name: test if play-framework exists
-  stat: path=/url/local/play-framework/play-{{ play_version }}
+  stat: path=/usr/local/play-framework/play-{{ play_version }}
   register: play
 
 - name: create play-framework dir
@@ -15,7 +15,7 @@
   sudo: yes
 
 - name: unzip play-framework
-  shell: unzip -Z /usr/local/play-framework/play-{{ play_version }}.zip -d /usr/local/play-framework/
+  shell: unzip /usr/local/play-framework/play-{{ play_version }}.zip -d /usr/local/play-framework/
   when: play.stat.exists == false
   sudo: yes
 
