@@ -1,5 +1,5 @@
 
-. /lib/lsb/init-functions
+.  /etc/rc.d/init.d/functions
 
 #. /etc/init.d/functions
 

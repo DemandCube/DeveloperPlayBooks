@@ -9,7 +9,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka.consumer.txt",
+                                "outputFile": "{{ log_directory }}/kafka.consumer.txt",
                                 "v31": false
                             }
                         }
@@ -22,7 +22,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka.controller.txt",
+                                "outputFile": "{{ log_directory }}/kafka.controller.txt",
                                 "v31": false
                             }
                         }
@@ -35,7 +35,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka.log.txt",
+                                "outputFile": "{{ log_directory }}/kafka.log.txt",
                                 "v31": false
                             }
                         }
@@ -48,7 +48,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka.network.txt",
+                                "outputFile": "{{ log_directory }}/kafka.network.txt",
                                 "v31": false
                             }
                         }
@@ -61,7 +61,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka.server.txt",
+                                "outputFile": "{{ log_directory }}/kafka.server.txt",
                                 "v31": false
                             }
                         }

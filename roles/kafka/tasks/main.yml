@@ -39,7 +39,8 @@
 
 - name: Kafka | Patch the kafka source for scala version compatibility
   command: sed -i "s/2.8.0/{{ scala_version }}/g" bin/kafka-run-class.sh chdir=/usr/local/kafka-{{ kafka_version }}
-
+  sudo: yes
+  
 - name: Kafka | Package the kafka source - pt. 1
   shell: ./sbt update chdir=/usr/local/kafka-{{ kafka_version }} creates=/usr/local/kafka-{{ kafka_version }}/target
 
