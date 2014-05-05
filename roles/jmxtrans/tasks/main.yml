@@ -1,0 +1,47 @@
+---
+ - name: create the necessary directories
+   file: path={{ item }} state=directory
+   with_items:
+    - "{{ log_directory }}"
+    - "{{ json_directory }}"
+    - "{{ download_location }}"
+   
+ - name: download the jmxtrans rpm file
+   get_url: url={{ jmxtrans_download_url }} dest="{{ download_location }}/jmxtrans.rpm"
+ 
+ - name: install the jmxtrans rpm
+   yum: name="{{ download_location }}/jmxtrans.rpm" state=present
+   sudo: yes
+    
+ - name: Edit kafka-server-start.sh add JMX_PORT
+   lineinfile: dest={{ kafka_home }}/bin/kafka-server-start.sh regexp=^export line="export JMX_PORT=${JMX_PORT:-9999}"
+   sudo: yes
+   
+ - name: Edit jmxtrans.sh. Modify JSON_DIR
+   lineinfile: dest=/usr/share/jmxtrans/jmxtrans.sh regexp=^JSON_DIR line="JSON_DIR=${JSON_DIR:-"{{ json_directory }}"}"
+   sudo: yes
+   
+ - name: Edit jmxtrans.sh. Modify LOG_DIR
+   lineinfile: dest=/usr/share/jmxtrans/jmxtrans.sh regexp=^LOG_DIR line="LOG_DIR=${LOG_DIR:-"{{ log_directory }}"}"
+   sudo: yes
+   
+ - name: Add jmxtrans.sh to path
+   lineinfile: dest=~/.bash_profile regexp=^PATH line=PATH=$PATH:/usr/share/jmxtrans
+   
+ - name: Get the basic jmxtrans config files
+   template: src={{item}} dest={{ json_directory }}/{{item}} mode=664
+   with_items:
+    - kafka.json
+    - kafka2.json
+    - kafkaallmetrics.json
+
+ - name: Check if jmxtrans is already running
+   shell: /usr/bin/jps -lm  | grep -i jmxtrans
+   register: jmxtranspid
+   ignore_errors: True
+   
+ - name: Start jmxtrans if it isnt already started
+   shell: "chdir=/usr/share/jmxtrans/ nohup /usr/share/jmxtrans/jmxtrans.sh start {{ json_directory }}/kafkaallmetrics.json"
+   async: 86400
+   poll: 0
+   when: jmxtranspid.stdout.find('jmxtrans') == -1

@@ -1,0 +1,10 @@
+#variables for this role
+jmxtrans_download_url: https://github.com/downloads/jmxtrans/jmxtrans/jmxtrans-20121016.145842.6a28c97fbb-0.noarch.rpm
+epel_repo: http://mirror-fpt-telecom.fpt.net/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+download_location: /tmp/jmxtrans/
+jmxtrans_home: /usr/local/jmxtrans
+log_directory: "{ jmxtrans_home }/logs"
+json_directory: "{{ jmxtrans_home }}/json"
+kafka_version: 0.8.0
+kafka_home: "/usr/local/kafka-{{ kafka_version }}"
+
