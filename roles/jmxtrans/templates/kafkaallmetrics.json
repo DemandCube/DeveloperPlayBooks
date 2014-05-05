@@ -1,0 +1,76 @@
+{
+    "servers": [
+        {
+            "port": "9999",
+            "host": "127.0.0.1",
+            "queries": [
+                {
+                    "outputWriters": [
+                        {
+                            "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+                            "settings": {
+                                "outputFile": "{{ log_directory }}/kafka.consumer.txt",
+                                "v31": false
+                            }
+                        }
+                    ],
+                    "obj": "\"kafka.consumer\":*",
+                    "resultAlias": "kafka.consumer"
+                },
+                {
+                    "outputWriters": [
+                        {
+                            "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+                            "settings": {
+                                "outputFile": "{{ log_directory }}/kafka.controller.txt",
+                                "v31": false
+                            }
+                        }
+                    ],
+                    "obj": "\"kafka.controller\":*",
+                    "resultAlias": "kafka.controller"
+                },
+                {
+                    "outputWriters": [
+                        {
+                            "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+                            "settings": {
+                                "outputFile": "{{ log_directory }}/kafka.log.txt",
+                                "v31": false
+                            }
+                        }
+                    ],
+                    "obj": "\"kafka.log\":*",
+                    "resultAlias": "kafka.log"
+                },
+                {
+                    "outputWriters": [
+                        {
+                            "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+                            "settings": {
+                                "outputFile": "{{ log_directory }}/kafka.network.txt",
+                                "v31": false
+                            }
+                        }
+                    ],
+                    "obj": "\"kafka.network\":*",
+                    "resultAlias": "kafka.network"
+                },
+                {
+                    "outputWriters": [
+                        {
+                            "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+                            "settings": {
+                                "outputFile": "{{ log_directory }}/kafka.server.txt",
+                                "v31": false
+                            }
+                        }
+                    ],
+                    "obj": "\"kafka.server\":*",
+                    "resultAlias": "kafka.server"
+                }
+            ],
+            "numQueryThreads": 2
+        }
+    ]
+}
