@@ -10,7 +10,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -31,7 +31,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -52,7 +52,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -73,7 +73,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -94,7 +94,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -115,7 +115,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -137,7 +137,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -159,7 +159,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -181,7 +181,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -203,7 +203,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -225,7 +225,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -246,7 +246,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -267,7 +267,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -288,7 +288,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -309,7 +309,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -330,7 +330,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -351,7 +351,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -372,7 +372,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -393,7 +393,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -414,7 +414,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -435,7 +435,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -456,7 +456,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -477,7 +477,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -498,7 +498,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -520,7 +520,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -542,7 +542,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -564,7 +564,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -587,7 +587,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -610,7 +610,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -633,7 +633,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -656,7 +656,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -679,7 +679,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               , "typeNames": ["name"]
               }
             }
@@ -701,7 +701,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -722,7 +722,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -743,7 +743,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -764,7 +764,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -785,7 +785,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -806,7 +806,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -827,7 +827,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -848,7 +848,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -869,7 +869,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
@@ -890,7 +890,7 @@
           [
             { "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter"
             , "settings":
-              { "outputFile": "/home/vagrant/jmxtrans/logs/jmxtrans.out"
+              { "outputFile": "{{ log_directory }}/jmxtrans.out"
               }
             }
           , { "@class" : "com.googlecode.jmxtrans.model.output.GangliaWriter"
