@@ -9,7 +9,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/bufferPool_direct_stats.txt",
+                                "outputFile": "{{ log_directory }}/bufferPool_direct_stats.txt",
                                 "v31": false
                             }
                         }
@@ -29,7 +29,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/bufferPool_mapped_stats.txt",
+                                "outputFile": "{{ log_directory }}/bufferPool_mapped_stats.txt",
                                 "v31": false
                             }
                         }
@@ -49,7 +49,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka_log4j_stats.txt",
+                                "outputFile": "{{ log_directory }}/kafka_log4j_stats.txt",
                                 "v31": false
                             }
                         }
@@ -65,7 +65,7 @@
                         {
                             "@class": "com.googlecode.jmxtrans.model.output.KeyOutWriter",
                             "settings": {
-                                "outputFile": "/home/vagrant/jmxtrans/logs/kafka_socketServer_stats.txt",
+                                "outputFile": "{{ log_directory }}/kafka_socketServer_stats.txt",
                                 "v31": false
                             }
                         }
