@@ -1,0 +1,30 @@
+---
+- name: Check if gradle is installed
+  stat: path={{ gradle_installation_directory }}
+  register: gradle
+  sudo: yes
+  ignore_errors: true
+   
+- name: download gradle binary
+  get_url: url={{ gradle_download_url }} dest={{ gradle_download_file }} mode=0644
+  when: gradle.stat.exists == false
+  sudo: yes
+  
+- name: Unzip gradle binary
+  command: unzip {{ gradle_download_file }} chdir=/usr/local  creates={{ gradle_installation_directory }}
+  when: gradle.stat.exists == false
+  sudo: yes
+
+- name: Add gradle bin folder to path
+  template: src=gradle.sh.j2 dest=/etc/profile.d/gradle.sh owner=root group=root mode=0644
+  when: gradle.stat.exists == false
+  sudo: yes
+  
+- name: Source gradle.sh
+  shell: source /etc/profile.d/gradle.sh
+  when: gradle.stat.exists == false
+  
+- name: Cleanup zip file
+  file: path={{ gradle_download_file }} state=absent 
+  when: gradle.stat.exists == false
+  sudo: yes
