@@ -1,0 +1,5 @@
+---
+gradle_version: 1.12
+gradle_download_url: "http://services.gradle.org/distributions/gradle-{{ gradle_version }}-bin.zip"
+gradle_installation_directory: /usr/local/gradle-{{ gradle_version }}
+gradle_download_file: "/usr/local/gradle-{{ gradle_version }}-bin.zip"
