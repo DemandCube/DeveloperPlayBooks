@@ -1,0 +1,4 @@
+- name: install unzip
+  yum: name='unzip' state=installed
+  sudo: yes
+  
