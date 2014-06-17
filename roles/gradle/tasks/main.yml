@@ -24,6 +24,10 @@
   shell: source /etc/profile.d/gradle.sh
   when: gradle.stat.exists == false
   
+- name: Create symbolic link of bin/gradle to /usr/bin/gradle
+  file: src={{ gradle_installation_directory }}/bin/gradle  dest=/usr/bin/gradle state=link
+  when: gradle.stat.exists == false
+  
 - name: Cleanup zip file
   file: path={{ gradle_download_file }} state=absent 
   when: gradle.stat.exists == false
