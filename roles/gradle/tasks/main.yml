@@ -15,15 +15,6 @@
   when: gradle.stat.exists == false
   sudo: yes
 
-- name: Add gradle bin folder to path
-  template: src=gradle.sh.j2 dest=/etc/profile.d/gradle.sh owner=root group=root mode=0644
-  when: gradle.stat.exists == false
-  sudo: yes
-  
-- name: Source gradle.sh
-  shell: source /etc/profile.d/gradle.sh
-  when: gradle.stat.exists == false
-  
 - name: Create symbolic link of bin/gradle to /usr/bin/gradle
   file: src={{ gradle_installation_directory }}/bin/gradle  dest=/usr/bin/gradle state=link
   when: gradle.stat.exists == false
