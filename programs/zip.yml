@@ -1,0 +1,4 @@
+- name: install zip
+  yum: name='zip' state=installed
+  sudo: yes
+  
